@@ -10,15 +10,19 @@ import javax.persistence.*;
 @Entity
 public class Ride implements Serializable {
 	@Id 
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer rideNumber;
-	private String from;
-	private String to;
+	private String fromCity;
+	private String toCity;
 	private int nPlaces;
 	private Date date;
 	private float price;
+	@ManyToOne(targetEntity=Driver.class, fetch=FetchType.EAGER)  
+	private Driver driver; 
 	
-	private Driver driver;  
+	public void setnPlaces(int nPlaces) {
+		this.nPlaces = nPlaces;
+	} 
 	
 	public Ride(){
 		super();
@@ -27,8 +31,8 @@ public class Ride implements Serializable {
 	public Ride(Integer rideNumber, String from, String to, Date date, int nPlaces, float price, Driver driver) {
 		super();
 		this.rideNumber = rideNumber;
-		this.from = from;
-		this.to = to;
+		this.fromCity = from;
+		this.toCity = to;
 		this.nPlaces = nPlaces;
 		this.date=date;
 		this.price=price;
@@ -39,8 +43,8 @@ public class Ride implements Serializable {
 
 	public Ride(String from, String to,  Date date, int nPlaces, float price, Driver driver) {
 		super();
-		this.from = from;
-		this.to = to;
+		this.fromCity = from;
+		this.toCity = to;
 		this.nPlaces = nPlaces;
 		this.date=date;
 		this.price=price;
@@ -67,46 +71,8 @@ public class Ride implements Serializable {
 	}
 
 
-	/**
-	 * Get the origin  of the ride
-	 * 
-	 * @return the origin location
-	 */
-
-	public String getFrom() {
-		return from;
-	}
 
 
-	/**
-	 * Set the origin of the ride
-	 * 
-	 * @param origin to be set
-	 */	
-	
-	public void setFrom(String origin) {
-		this.from = origin;
-	}
-
-	/**
-	 * Get the destination  of the ride
-	 * 
-	 * @return the destination location
-	 */
-
-	public String getTo() {
-		return to;
-	}
-
-
-	/**
-	 * Set the origin of the ride
-	 * 
-	 * @param destination to be set
-	 */	
-	public void setTo(String destination) {
-		this.to = destination;
-	}
 
 	/**
 	 * Get the free places of the ride
@@ -175,7 +141,23 @@ public class Ride implements Serializable {
 
 
 	public String toString(){
-		return rideNumber+";"+";"+from+";"+to+";"+date;  
+		return rideNumber+";"+";"+fromCity+";"+toCity+";"+date;  
+	}
+
+	public String getFromCity() {
+		return fromCity;
+	}
+
+	public void setFromCity(String fromCity) {
+		this.fromCity = fromCity;
+	}
+
+	public String getToCity() {
+		return toCity;
+	}
+
+	public void setToCity(String toCity) {
+		this.toCity = toCity;
 	}
 
 

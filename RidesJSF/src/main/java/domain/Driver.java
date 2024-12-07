@@ -1,25 +1,29 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 import javax.persistence.*;
 
 
+@SuppressWarnings("serial")
 @Entity
 public class Driver implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	public List<Ride> getRides() {
+		return rides;
+	}
+
+	public void setRides(List<Ride> rides) {
+		this.rides = rides;
+	}
+
 	@Id 
 	private String email;
 	private String name;
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
-	private List<Ride> rides=new Vector<Ride>();
+	@OneToMany(targetEntity=Ride.class, mappedBy="driver", fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Ride> rides=new ArrayList<Ride>();
 
 	public Driver() {
 		super();
@@ -54,7 +58,7 @@ public class Driver implements Serializable {
 	}
 	
 	/**
-	 * This method creates a bet with a question, minimum bet ammount and percentual profit
+	 * This method creates a bet with a question, minimum bet amount and percentual profit
 	 * 
 	 * @param question to be added to the event
 	 * @param betMinimum of that question
@@ -76,7 +80,7 @@ public class Driver implements Serializable {
 	 */
 	public boolean doesRideExists(String from, String to, Date date)  {	
 		for (Ride r:rides)
-			if ( (java.util.Objects.equals(r.getFrom(),from)) && (java.util.Objects.equals(r.getTo(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
+			if ( (java.util.Objects.equals(r.getFromCity(),from)) && (java.util.Objects.equals(r.getToCity(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
 			 return true;
 		
 		return false;
@@ -102,7 +106,7 @@ public class Driver implements Serializable {
 		Ride r=null;
 		while (!found && index<=rides.size()) {
 			r=rides.get(++index);
-			if ( (java.util.Objects.equals(r.getFrom(),from)) && (java.util.Objects.equals(r.getTo(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
+			if ( (java.util.Objects.equals(r.getFromCity(),from)) && (java.util.Objects.equals(r.getToCity(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
 			found=true;
 		}
 			

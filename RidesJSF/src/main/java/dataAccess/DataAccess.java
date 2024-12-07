@@ -31,8 +31,6 @@ public class DataAccess  {
 	private  EntityManagerFactory emf;
 
 
-	ConfigXML c=ConfigXML.getInstance();
-
      public DataAccess()  {
 		if (c.isDatabaseInitialized()) {
 			String fileName=c.getDbFilename();

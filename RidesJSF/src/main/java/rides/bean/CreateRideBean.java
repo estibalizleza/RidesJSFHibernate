@@ -20,6 +20,7 @@ public class CreateRideBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public CreateRideBean() {
+		
 		this.facadeBL = FacadeBean.getBusinessLogic();
 		this.numSeats = 1;
 	}
