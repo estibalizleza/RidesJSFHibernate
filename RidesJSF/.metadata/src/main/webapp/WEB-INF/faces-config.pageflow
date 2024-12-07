@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf17327914104700" configfile="/RidesJSF/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="Main.xhtml" x="122" y="370" id="pf17331577836640" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf17331577836641 pf17331577836642" path="/Main.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="CreateRide.xhtml" x="338" y="178" id="pf17331577836643" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf17331577836641" path="/CreateRide.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="QueryRides.xhtml" x="338" y="562" id="pf17331577836654" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf17331577836642" path="/QueryRides.xhtml"/>
+  <links id="pf17331577836641" target="pf17331577836643" source="pf17331577836640" outcome="goToCreateRide"/>
+  <links id="pf17331577836642" target="pf17331577836654" source="pf17331577836640" outcome="goToQueryRides"/>
+</pageflow:Pageflow>

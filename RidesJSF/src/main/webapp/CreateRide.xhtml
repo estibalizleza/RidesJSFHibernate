@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Create Ride</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<h:body>
+		<h:form>
+			<table>
+				<tr>
+					<td><h3>Create Ride</h3></td>
+				</tr>
+				<tr>
+					<td>Depart City:</td>
+					<td><h:inputText id="departCity"
+							value="#{createRideBean.departCity}" required="true" /></td>
+							<td><h:message for="departCity" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td>Arrival City:</td>
+					<td><h:inputText id="arrivalCity"
+							value="#{createRideBean.arrivalCity}" required="true" /></td>
+							<td><h:message for="arrivalCity" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td>Number of Seats:</td>
+					<td><h:inputText id="numSeats"
+							value="#{createRideBean.numSeats}" required="true">
+							<f:validateLongRange minimum="1" />
+						</h:inputText></td>
+						<td><h:message for="numSeats" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td>Price:</td>
+					<td><h:inputText id="price" value="#{createRideBean.price}"
+							required="true">
+							<f:validateDoubleRange minimum="1.0" />
+						</h:inputText></td>
+						<td><h:message for="price" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td>Ride Date:</td>
+					<td><p:calendar id="rideDate"
+							value="#{createRideBean.rideDate}" navigator="true"
+							dateFormat="dd/MM/yyyy" required="true" showIcon="true" /></td>
+							<td><h:message for="rideDate" style="color:red" /></td>
+				</tr>
+			</table>
+			<div>
+				<p:commandButton value="Create Ride" update="@form"
+					styleClass="custom-button" action="#{createRideBean.createRide}" />
+				<p:commandButton value="Close" immediate="true"
+					styleClass="custom-button" action="#{createRideBean.close}" />
+			</div>
+			<h:messages globalOnly="true" style="color:blue" />
+		</h:form>
+	</h:body>
+</f:view>
+</html>

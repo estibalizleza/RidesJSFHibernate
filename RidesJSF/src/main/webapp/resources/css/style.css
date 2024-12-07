@@ -1,0 +1,32 @@
+
+h3 {
+	color: #004040;
+	text-align: left;
+}
+
+table {
+	background-color: rgb(192, 192, 192);
+	width: 100%;
+	border-collapse: collapse;
+}
+
+body {
+	background-color:  rgb(192, 192, 192);
+	display: flex;
+	justify-content: left;
+	align-items: left;
+	height: 100vh;
+	margin: 0;
+}
+
+
+td, th {
+	padding: 10px;
+	text-align: left;
+}
+
+
+.custom-button {
+    font-family: Times New Roman;
+    font-size: 18px;
+}

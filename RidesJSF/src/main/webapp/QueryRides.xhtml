@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+	<h:head>
+		<title>Query rides</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<h:body>
+		<h:form>
+			<h3>Bidaiak Bilatu</h3>
+			<table>
+				<tr>
+					<td>Depart City</td>
+					<td><p:selectOneMenu id="departCity"
+							value="#{QueryRides.selectedDepartCity}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{QueryRides.departCities}" var="city"
+								itemValue="#{city}" itemLabel="#{city}" />
+							<p:ajax event="change"
+								listener="#{QueryRides.updateArrivalCities}"
+								update="arrivalCity rideTable" />
+						</p:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td>Arrival City</td>
+					<td><p:selectOneMenu id="arrivalCity"
+							value="#{QueryRides.selectedArrivalCity}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{QueryRides.arrivalCities}" var="arrival"
+								itemValue="#{arrival}" itemLabel="#{arrival}" />
+						</p:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td>Data:</td>
+					<td><p:calendar id="data" value="#{QueryRides.data}"
+							navigator="true" mode="popup">
+						</p:calendar></td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton value="Aukeratu" styleClass="custom-button" action="#{QueryRides.updateRides}" update="rideTable mezuak" />
+					</td>
+				</tr>
+				<tr>
+					<td>Bidaiak</td>
+				</tr>
+				<tr>
+					<td>
+						<p:dataTable id="rideTable" var="ride" value="#{QueryRides.filteredRides}" style="margin-top:20px">
+							<p:column headerText="Driver">
+								<h:outputText value="#{ride.driver.name}" />
+							</p:column>
+							<p:column headerText="Seats">
+								<h:outputText value="#{ride.nPlaces}" />
+							</p:column>
+							<p:column headerText="Price">
+								<h:outputText value="#{ride.price}" />
+							</p:column>
+						</p:dataTable>
+						<h:messages id="mezuak" globalOnly="true" style="color:blue" /> 
+					</td>
+				</tr>
+			</table>
+			<p:commandButton value="Close" immediate="true"
+					styleClass="custom-button" action="#{QueryRides.close}" />
+		</h:form>
+	</h:body>
+</f:view>
+</html>
