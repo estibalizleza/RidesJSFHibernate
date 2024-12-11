@@ -17,7 +17,7 @@ public class Ride implements Serializable {
 	private int nPlaces;
 	private Date date;
 	private float price;
-	@ManyToOne(targetEntity=Driver.class, fetch=FetchType.EAGER)  
+	@ManyToOne(targetEntity=Driver.class, fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)  
 	private Driver driver; 
 	
 	public void setnPlaces(int nPlaces) {
@@ -98,7 +98,7 @@ public class Ride implements Serializable {
 	}
 
 	
-	public float getnPlaces() {
+	public int getnPlaces() {
 		return nPlaces;
 	}
 

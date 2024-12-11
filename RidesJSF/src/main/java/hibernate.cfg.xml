@@ -12,7 +12,10 @@
   <property name="hibernate.connection.autocommit">false</property>
   <property name="hibernate.current_session_context_class">thread</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
+  <mapping class="domain.User"/>
   <mapping class="domain.Driver"/>
   <mapping class="domain.Ride"/>
+  <mapping class="domain.Traveler"/>
+  <mapping class="domain.Booking"/>
  </session-factory>
 </hibernate-configuration>

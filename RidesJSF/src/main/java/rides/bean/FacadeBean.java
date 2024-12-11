@@ -2,12 +2,13 @@ package rides.bean;
 
 import businessLogic.BLFacade;
 import businessLogic.BLFacadeImplementation;
-import dataAccess.DataAccess;
 import dataAccess.HibernateDataAccess;
+import domain.User;
 
 public class FacadeBean {
 	private static FacadeBean singleton = new FacadeBean();
 	private static BLFacade facadeInterface;
+	private User erabiltzailea;
 
 	private FacadeBean() {
 		try {

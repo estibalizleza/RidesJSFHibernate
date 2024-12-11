@@ -22,19 +22,55 @@
 				</tr>
 				<tr>
 					<td>
-						<p:commandButton value="Query Rides"
+						<p:commandButton value="Create Ride"
 							styleClass="custom-button"
-							action="#{Main.goToQueryRides}" />
+							action="#{Main.goToCreateRide}" 
+							rendered="#{Main.isDriver()}" />
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<p:commandButton value="Create Ride"
+						<p:commandButton value="BookRide"
 							styleClass="custom-button"
-							action="#{Main.goToCreateRide}" />
+							action="#{Main.goToBookRide}" 
+							rendered="#{Main.isTraveler()}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton value="Login"
+							styleClass="custom-button"
+							action="#{Main.goToLogin}" 
+							rendered="#{Main.isAdmin()}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton value="Register"
+							styleClass="custom-button"
+							action="#{Main.goToRegister}" 
+							rendered="#{Main.isAdmin()}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton value="Query Rides"
+							styleClass="custom-button"
+							action="#{Main.goToQueryRides}"
+							rendered="#{Main.isAdmin()}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton value="Logout"
+							update="@form"
+							styleClass="custom-button"
+							action="#{Main.logout}" 
+							rendered="#{Main.isUser()}" />
 					</td>
 				</tr>
 			</table>
+			<h:messages id="mezuak" globalOnly="true" style="color:blue" />
 		</h:form>
 	</h:body>
 </f:view>

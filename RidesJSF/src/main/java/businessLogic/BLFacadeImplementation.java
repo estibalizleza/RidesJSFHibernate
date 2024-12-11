@@ -2,11 +2,10 @@ package businessLogic;
 
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import dataAccess.HibernateDataAccess;
 import domain.Ride;
-import domain.Driver;
+import domain.User;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.RideAlreadyExistException;
 
@@ -15,6 +14,7 @@ import exceptions.RideAlreadyExistException;
  */
 public class BLFacadeImplementation implements BLFacade {
 	HibernateDataAccess dbManager;
+	private User currentUser;
 
 	public BLFacadeImplementation() {
 		System.out.println("Creating BLFacadeImplementation instance");
@@ -76,5 +76,42 @@ public class BLFacadeImplementation implements BLFacade {
 		List<Date> dates = dbManager.getThisMonthDatesWithRides(from, to, date);
 		return dates;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean register(String email, String passwd, String mota) {
+		return dbManager.register(email, passwd, mota);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public User getUser(String email) {
+		return dbManager.getUser(email);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
+
+	/**
+	 * {@inheritDoc}
+	 */
+    @Override
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
+    
+    /**
+	 * {@inheritDoc}
+	 */
+    public void bookRide(String email, Ride ride, int seats) {
+    	dbManager.bookRide(email, ride, seats);
+    }
 
 }

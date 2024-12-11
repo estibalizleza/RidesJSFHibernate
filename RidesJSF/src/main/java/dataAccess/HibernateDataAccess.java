@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import configuration.UtilDate;
+import domain.Booking;
 import domain.Driver;
 import domain.Ride;
+import domain.Traveler;
+import domain.User;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
 import org.hibernate.Session;
@@ -29,16 +32,29 @@ public class HibernateDataAccess {
 		}
 	}
 
-	public void createAndStoreDriver(String email, String name) {
+	public boolean existsDriver(String email, String pass) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-
-		Driver d = (Driver) session.get(Driver.class, email);
-		if (d == null) {
-			d = new Driver(email, name);
-			session.persist(d);
+		try {
+			Driver driver = (Driver) session.get(Driver.class, email);
+			return driver != null;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+			return false;
 		}
-		session.getTransaction().commit();
+	}
+
+	public User getUser(String email) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		try {
+			return (User) session.get(User.class, email);
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
@@ -60,13 +76,8 @@ public class HibernateDataAccess {
 		System.out.println(">> DataAccess: createRide=> from= " + from + " to= " + to + " driver=" + driverEmail
 				+ " date " + date);
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
 		try {
-			if (new Date().compareTo(date) > 0) {
-				throw new RideMustBeLaterThanTodayException(
-						ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
-			}
-			session.beginTransaction();
-
 			Driver driver = (Driver) session.get(Driver.class, driverEmail);
 			if (driver.doesRideExists(from, to, date)) {
 				session.getTransaction().commit();
@@ -78,8 +89,9 @@ public class HibernateDataAccess {
 			session.getTransaction().commit();
 
 			return ride;
-		} catch (NullPointerException e) {
-			session.getTransaction().commit();
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
 			return null;
 		}
 
@@ -95,12 +107,18 @@ public class HibernateDataAccess {
 	public List<String> getArrivalCities(String from) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		String hql = "SELECT DISTINCT r.toCity FROM Ride r WHERE r.fromCity = :from ORDER BY r.toCity";
-		Query query = session.createQuery(hql);
-		query.setParameter("from", from);
-		List<String> arrivingCities = (List<String>) query.list();
-		session.getTransaction().commit();
-		return arrivingCities;
+		try {
+			String hql = "SELECT DISTINCT r.toCity FROM Ride r WHERE r.fromCity = :from ORDER BY r.toCity";
+			Query query = session.createQuery(hql);
+			query.setParameter("from", from);
+			List<String> arrivingCities = (List<String>) query.list();
+			session.getTransaction().commit();
+			return arrivingCities;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
@@ -111,10 +129,16 @@ public class HibernateDataAccess {
 	public List<String> getDepartCities() {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Query query = session.createQuery("SELECT DISTINCT r.fromCity FROM Ride r ORDER BY r.fromCity");
-		List<String> cities = query.list();
-		session.getTransaction().commit();
-		return cities;
+		try {
+			Query query = session.createQuery("SELECT DISTINCT r.fromCity FROM Ride r ORDER BY r.fromCity");
+			List<String> cities = query.list();
+			session.getTransaction().commit();
+			return cities;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
 
 	}
 
@@ -130,18 +154,25 @@ public class HibernateDataAccess {
 		System.out.println(">> DataAccess: getRides=> from= " + from + " to= " + to + " date " + date);
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		List<Ride> res = new ArrayList<>();
-		Query query = session
-				.createQuery("SELECT r FROM Ride r WHERE r.fromCity = :from AND r.toCity = :to AND r.date = :date");
-		query.setParameter("from", from);
-		query.setParameter("to", to);
-		query.setParameter("date", date);
-		List<Ride> rides = query.list();
-		for (Ride ride : rides) {
-			res.add(ride);
-		}
-		session.getTransaction().commit();
-		return res;
+		try{
+			List<Ride> res = new ArrayList<>();
+			Query query = session
+					.createQuery("SELECT r FROM Ride r WHERE r.fromCity = :from AND r.toCity = :to AND r.date = :date");
+			query.setParameter("from", from);
+			query.setParameter("to", to);
+			query.setParameter("date", date);
+			List<Ride> rides = query.list();
+			for (Ride ride : rides) {
+				res.add(ride);
+			}
+			session.getTransaction().commit();
+			return res;
+		} catch (Exception e) {
+            session.getTransaction().rollback(); 
+            e.printStackTrace();
+            return null;
+        }
+		
 	}
 
 	/**
@@ -178,8 +209,8 @@ public class HibernateDataAccess {
 	}
 
 	public void init() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
 
 			Calendar today = Calendar.getInstance();
@@ -220,14 +251,88 @@ public class HibernateDataAccess {
 				driver3.addRide("Bilbo", "Donostia", UtilDate.newDate(year, month, 14), 1, 3);
 				session.persist(driver3);
 			}
-
 			// No hace falta persistir los rides porque tenemos cascadeType.PERSIST
 			// Hibernate automáticamente persistirá también los objetos Ride que están
 			// asociados a ese Driver
 
+			Traveler trav1 = (Traveler) session.get(Traveler.class, "traveler1@gmail.com");
+			if (trav1 == null) {
+				trav1 = new Traveler("traveler1@gmail.com", "Test traveler");
+				session.persist(trav1);
+			}
+			User admin = (User) session.get(User.class, "has@gmail.com");
+			if (admin == null) {
+				admin = new User("has@gmail.com", "12345", "Admin");
+				session.persist(admin);
+			}
+
 			session.getTransaction().commit();
 			System.out.println("Db initialized");
 		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+		}
+
+	}
+
+	public boolean register(String email, String password, String mota) {
+		System.out.println(">> DataAccess: register");
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			if (mota.equals("Driver")) {
+				Driver existingDriver = (Driver) session.get(Driver.class, email);
+				if (existingDriver == null) {
+					Driver d = new Driver(email, password);
+					session.persist(d);
+				} else
+					return false;
+			} else if (mota.equals("Traveler")) {
+				Traveler existingTraveler = (Traveler) session.get(Traveler.class, email);
+				if (existingTraveler == null) {
+					Traveler t = new Traveler(email, password);
+					session.persist(t);
+				} else
+					return false;
+			}
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+			return false;
+		}
+	}
+
+	/**
+	 * This method books a ride for a traveler
+	 * 
+	 * @param email email of the traveler
+	 * @param ride  ride to book
+	 * @param seats number of seats to book
+	 * @param desk  discount to apply
+	 * @return true if the booking is successful, false otherwise
+	 */
+	public void bookRide(String email, Ride ride, int seats) {
+		System.out.println(">> DataAccess: book Ride");
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Traveler traveler = (Traveler) getUser(email);
+			double ridePrice = ride.getPrice() * seats;
+			Booking booking = new Booking(ride, traveler, seats);
+			booking.setTraveler(traveler);
+			// session.persist(booking); Ez da beharrezkoa booking lista CascadeType.PERSIST
+			// delako
+			ride.setnPlaces(ride.getnPlaces() - seats);
+			traveler.addBookedRide(booking);
+			traveler.setMoney(traveler.getMoney() - ridePrice);
+			session.persist(traveler);
+			session.merge(ride); // only to update entity
+			session.getTransaction().commit();
+
+		} catch (Exception e) {
+			session.getTransaction().rollback();
 			e.printStackTrace();
 		}
 

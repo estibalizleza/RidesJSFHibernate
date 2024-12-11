@@ -6,6 +6,7 @@
 	version="2.0">
 	<managed-bean>
 		<managed-bean-name>createRideBean</managed-bean-name>
+		s
 		<managed-bean-class>rides.bean.CreateRideBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
@@ -17,6 +18,21 @@
 	<managed-bean>
 		<managed-bean-name>Main</managed-bean-name>
 		<managed-bean-class>rides.bean.MainBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>Login</managed-bean-name>
+		<managed-bean-class>rides.bean.LoginBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>Register</managed-bean-name>
+		<managed-bean-class>rides.bean.RegisterBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>BookRide</managed-bean-name>
+		<managed-bean-class>rides.bean.BookRideBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
@@ -45,4 +61,29 @@
 		</navigation-case>
 
 	</navigation-rule>
+	<navigation-rule>
+		<display-name>Main.xhtml</display-name>
+		<from-view-id>/Main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>goToLogin</from-outcome>
+			<to-view-id>/Login.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>Main.xhtml</display-name>
+		<from-view-id>/Main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>goToRegister</from-outcome>
+			<to-view-id>/Register.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>Main.xhtml</display-name>
+		<from-view-id>/Main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>goToBookRide</from-outcome>
+			<to-view-id>/BookRide.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 </faces-config>

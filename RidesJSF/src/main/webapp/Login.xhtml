@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+	<h:head>
+		<title>Login</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<h:body>
+		<h:form>
+			<table>
+				<tr>
+					<td><h3>Saioa hasi</h3></td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					<td><h:inputText id="email" value="#{Login.email}"
+							required="true" requiredMessage="Email-a beharrezkoa da."/></td>
+					<td><h:message for="email" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td>Pasahitza:</td>
+					<td><h:inputSecret id="pasahitza" value="#{Login.pasahitza}"
+							required="true" requiredMessage="Pasahitza beharrezkoa da."/></td>
+					<td><h:message for="pasahitza" style="color:red" /></td>
+				</tr>
+			</table>
+			<p:commandButton value="Saioa hasi" update="@form"
+					styleClass="custom-button" action="#{Login.login}" />
+			<p:commandButton value="Itxi" immediate="true"
+					styleClass="custom-button" action="#{Login.close}" update="@form"  />
+			<h:messages id="mezuak" style="color:blue" globalOnly="true"/>
+		</h:form>
+	</h:body>
+</f:view>
+</html>

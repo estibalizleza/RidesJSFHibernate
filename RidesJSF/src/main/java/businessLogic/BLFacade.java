@@ -5,6 +5,7 @@ import java.util.List;
 
 //import domain.Booking;
 import domain.Ride;
+import domain.User;
 import domain.Driver;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.RideAlreadyExistException;
@@ -63,6 +64,45 @@ public interface BLFacade  {
 	 * @return collection of rides
 	 */
 	public List<Date> getThisMonthDatesWithRides(String from, String to, Date date);
+	
+	/**
+	 * This method registers a user
+	 * @param email
+	 * @param passwd
+	 * @param mota
+	 * @return true if correctly registered, false otherwise
+	 */
+	public boolean register(String email, String passwd, String mota);
+	
+	/**
+	 * This method checks if a user already exists
+	 * @param email
+	 * @param pass
+	 * @return
+	 */
+	public User getUser(String email);
+	
+	/**
+     * This method sets the current user
+     * @param user
+     */
+    void setCurrentUser(User user);
+
+    /**
+     * This method returns the current user
+     * @return the current user
+     */
+    User getCurrentUser();
+    
+    /**
+     * This method books a ride
+     * @param email
+     * @param ride
+     * @param seats
+     */
+    void bookRide(String email, Ride ride, int seats);
+    
+	
 	
 
 	

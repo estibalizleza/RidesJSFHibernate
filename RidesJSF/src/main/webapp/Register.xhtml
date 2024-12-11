@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+	<h:head>
+		<title>Register</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<h:body>
+		<h:form>
+			<table>
+				<tr>
+					<td><h3>Erregistratu</h3></td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					<td><h:inputText id="email" value="#{Register.email}"
+							required="true" requiredMessage="Email-a beharrezkoa da.">
+							<f:validateRegex
+								pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+								validatorMessage="Formatua ez da egokia." />
+						</h:inputText></td>
+					<td><h:message for="email" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td>Pasahitza:</td>
+					<td><h:inputSecret id="pasahitza" value="#{Register.pass}"
+							required="true" requiredMessage="Pasahitza beharrezkoa da."/></td>
+					<td><h:message for="pasahitza" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td>Pasahitza errepikatu:</td>
+					<td><h:inputSecret id="pasahitza2" value="#{Register.pass2}"
+							required="true" requiredMessage="Pasahitza errepikatzea beharrezkoa da."/></td>
+					<td><h:message for="pasahitza2" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td>Mota:</td>
+					<td><p:selectOneMenu id="mota" value="#{Register.mota}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{Register.motak}" var="mota"
+								itemValue="#{mota}" itemLabel="#{mota}" />
+						</p:selectOneMenu></td>
+				</tr>
+			</table>
+			<p:commandButton value="Erregistratu" update="@form"
+				styleClass="custom-button" action="#{Register.register}" />
+			<p:commandButton value="Itxi" immediate="true"
+				styleClass="custom-button" action="#{createRideBean.close}" />
+			<h:messages id="mezuak" style="color:blue" globalOnly="true"/>
+		</h:form>
+	</h:body>
+</f:view>
+</html>

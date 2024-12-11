@@ -7,27 +7,71 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import businessLogic.BLFacade;
 import domain.Ride;
+import domain.Traveler;
 
-public class QueryRidesBean {
+public class BookRideBean {
+	private BLFacade businessLogic;
 	private List<String> departCities;
 	private List<String> arrivalCities;
+	private int numSeats;
 	private Date data;
 	private List<Ride> filteredRides;
 	private String selectedDepartCity;
 	private String selectedArrivalCity;
-	private BLFacade businessLogic;
+	private Ride selectedRide;
 
-	public QueryRidesBean() {
-		businessLogic = FacadeBean.getBusinessLogic();
+	public Ride getSelectedRide() {
+		return selectedRide;
+	}
+
+	public void setSelectedRide(Ride selectedRide) {
+		this.selectedRide = selectedRide;
+	}
+
+	public int getNumSeats() {
+		return numSeats;
+	}
+
+	public void setNumSeats(int numSeats) {
+		this.numSeats = numSeats;
+	}
+
+	public BookRideBean() {
+		businessLogic= FacadeBean.getBusinessLogic();
 		this.departCities = new ArrayList<>();
 		this.arrivalCities = new ArrayList<>();
 		departCities = businessLogic.getDepartCities();
 		filteredRides = new ArrayList<>();
+	}
 
+	public void bookRide() {
+		Traveler t = (Traveler)businessLogic.getCurrentUser();
+		System.out.println(selectedRide + " " + numSeats + t);
+		if (selectedRide != null && numSeats > 0 && t!=null) {
+		// Numero de sitios elegido es igual o menor que el numero de sitios disponibles
+			if(numSeats>selectedRide.getnPlaces()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Eskatutako eserleku kopurua handiegia da.", ""));
+			}else {
+				float total= selectedRide.getPrice() * numSeats;
+				if(t.getMoney()< total){
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Ez duzu diru nahikorik bidaia erreserbatzeko.", ""));
+				}else {
+					businessLogic.bookRide(t.getEmail(), selectedRide, numSeats);
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Bidaia erreserbatu duzu!!!", ""));
+				}
+			}
+		}else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Ezin da bidaia erreserbatu.", ""));
+		}
 	}
 
 	public List<Ride> getFilteredRides() {
@@ -99,13 +143,13 @@ public class QueryRidesBean {
 						"Sartutako parametroetarako ez da bidairik aurkitu", ""));
 				return false;
 			}
+			RequestContext.getCurrentInstance().update("rideTable");
 			return true;
 		} else {
 			filteredRides = null;
 			return false;
 		}
 	}
-
 
 	public String close() {
 		return "Main";

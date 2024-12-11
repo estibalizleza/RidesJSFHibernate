@@ -8,53 +8,61 @@
 
 <f:view>
 	<h:head>
-		<title>Query rides</title>
+		<title>Book rides</title>
 		<h:outputStylesheet library="css" name="style.css" />
 	</h:head>
 	<h:body>
 		<h:form>
-			<h3>Bidaiak Bilatu</h3>
+			<h3>Bidaiak Erreserbatu</h3>
 			<table>
 				<tr>
 					<td>Depart City</td>
 					<td><p:selectOneMenu id="departCity"
-							value="#{QueryRides.selectedDepartCity}"
+							value="#{BookRide.selectedDepartCity}"
 							converter="omnifaces.SelectItemsConverter">
-							<f:selectItems value="#{QueryRides.departCities}" var="city"
+							<f:selectItems value="#{BookRide.departCities}" var="city"
 								itemValue="#{city}" itemLabel="#{city}" />
-							<p:ajax event="change"
-								listener="#{QueryRides.updateArrivalCities}"
+							<p:ajax event="change" listener="#{BookRide.updateArrivalCities}"
 								update="arrivalCity rideTable" />
-						</p:selectOneMenu></td>
+						</p:selectOneMenu><h:message for="departCity" style="color:red" /></td>
 				</tr>
 				<tr>
 					<td>Arrival City</td>
 					<td><p:selectOneMenu id="arrivalCity"
-							value="#{QueryRides.selectedArrivalCity}"
+							value="#{BookRide.selectedArrivalCity}"
 							converter="omnifaces.SelectItemsConverter">
-							<f:selectItems value="#{QueryRides.arrivalCities}" var="arrival"
+							<f:selectItems value="#{BookRide.arrivalCities}" var="arrival"
 								itemValue="#{arrival}" itemLabel="#{arrival}" />
-						</p:selectOneMenu></td>
+						</p:selectOneMenu><h:message for="arrivalCity" style="color:red" /></td>
 				</tr>
 				<tr>
 					<td>Data:</td>
-					<td><p:calendar id="data" value="#{QueryRides.data}"
+					<td><p:calendar id="data" value="#{BookRide.data}"
 							navigator="true" mode="popup">
-							<p:ajax event="dateSelect" listener="#{QueryRides.onDateSelect}"
+							<p:ajax event="dateSelect" listener="#{BookRide.onDateSelect}"
 								update="rideTable" />
-						</p:calendar></td>
+						</p:calendar><h:message for="data" style="color:red" /></td>
 				</tr>
 				<tr>
 					<td><p:commandButton value="Aukeratu"
-							styleClass="custom-button" action="#{QueryRides.updateRides}"
+							styleClass="custom-button" action="#{BookRide.updateRides}"
 							update="rideTable mezuak" /></td>
+				</tr>
+				<tr>
+					<td>Eserleku kopurua:</td>
+					<td><p:inputText id="seats" value="#{BookRide.numSeats}"
+							required="true" /></td>
+					<td><h:message for="seats" style="color:red" /></td>
 				</tr>
 				<tr>
 					<td>Bidaiak</td>
 				</tr>
 				<tr>
 					<td><p:dataTable id="rideTable" var="ride"
-							value="#{QueryRides.filteredRides}" style="margin-top:20px">
+							value="#{BookRide.filteredRides}"
+							selection="#{BookRide.selectedRide}" style="margin-top:20px"
+							selectionMode="single"
+							rowKey="#{ride.rideNumber}">>
 							<p:column headerText="Driver">
 								<h:outputText value="#{ride.driver.email}" />
 							</p:column>
@@ -68,8 +76,10 @@
 					</td>
 				</tr>
 			</table>
+			<p:commandButton value="Book Ride" update="@form"
+				styleClass="custom-button" action="#{BookRide.bookRide}" />
 			<p:commandButton value="Itxi" immediate="true"
-				styleClass="custom-button" action="#{QueryRides.close}" />
+				styleClass="custom-button" action="#{BookRide.close}" />
 			<h:messages id="mezuak" globalOnly="true" style="color:blue" />
 		</h:form>
 	</h:body>
