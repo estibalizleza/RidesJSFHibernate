@@ -337,5 +337,77 @@ public class HibernateDataAccess {
 		}
 
 	}
+	
+	/**
+	 * This method return all of the rides of a driver
+	 * @param driver
+	 * @return 
+	 */
+	public List<Ride> getRidesFromDriver(Driver driver) {
+		System.out.println(">> DataAccess: bidaiak lortu");
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		try{
+			Query query = session
+					.createQuery("SELECT r FROM Ride r WHERE r.driver = :driver");
+			query.setParameter("driver", driver);
+			List<Ride> rides = query.list();
+			session.getTransaction().commit();
+			return rides;
+		} catch (Exception e) {
+            session.getTransaction().rollback(); 
+            e.printStackTrace();
+            return null;
+        }
+		
+	}
+	
+	/**
+	 * This method return all of the rides of a driver
+	 * @param driver
+	 * @return 
+	 */
+	public List<Booking> getBookingsFromTraveler(Traveler traveler) {
+		System.out.println(">> DataAccess: erreserbak lortu");
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		try{
+			Query query = session
+					.createQuery("SELECT b FROM Booking b WHERE b.traveler = :traveler");
+			query.setParameter("traveler", traveler);
+			List<Booking> bookings = query.list();
+			session.getTransaction().commit();
+			return bookings;
+		} catch (Exception e) {
+            session.getTransaction().rollback(); 
+            e.printStackTrace();
+            return null;
+        }
+		
+	}
+	
+	
+	public List<Ride> bidaiakLortu(String from) {
+		System.out.println(">> DataAccess: bidaiak lortu");
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		try{
+			List<Ride> res = new ArrayList<>();
+			Query query = session
+					.createQuery("SELECT r FROM Ride r WHERE r.fromCity = :from");
+			query.setParameter("from", from);
+			List<Ride> rides = query.list();
+			for (Ride ride : rides) {
+				res.add(ride);
+			}
+			session.getTransaction().commit();
+			return res;
+		} catch (Exception e) {
+            session.getTransaction().rollback(); 
+            e.printStackTrace();
+            return null;
+        }
+		
+	}
 
 }

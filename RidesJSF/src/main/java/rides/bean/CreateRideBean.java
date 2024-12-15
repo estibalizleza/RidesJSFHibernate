@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 
 import businessLogic.BLFacade;
+import domain.Driver;
 
 public class CreateRideBean implements Serializable {
 	private String departCity;
@@ -76,7 +77,7 @@ public class CreateRideBean implements Serializable {
 	public void createRide() {
 
 		try {
-			facadeBL.createRide(departCity, arrivalCity, rideDate, numSeats, price, "driver3@gmail.com");
+			facadeBL.createRide(departCity, arrivalCity, rideDate, numSeats, price, facadeBL.getCurrentUser().getEmail());
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Ride created successfully", null));
 		} catch (Exception e) {

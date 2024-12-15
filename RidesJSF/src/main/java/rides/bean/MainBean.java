@@ -42,6 +42,18 @@ public class MainBean {
 		return "BookRide";
 	}
 	
+	public String goToKlasekoAtaza() {
+		return "KlasekoAtaza";
+	}
+	
+	public String goToViewRides() {
+		return "DriverRides";
+	}
+	
+	public String goToViewBookings() {
+		return "TravelerBookings";
+	}
+	
 	public void logout() {
 		User erabiltzailea=businessLogic.getUser("has@gmail.com");
 		businessLogic.setCurrentUser(erabiltzailea);

@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import dataAccess.HibernateDataAccess;
+import domain.Booking;
+import domain.Driver;
 import domain.Ride;
+import domain.Traveler;
 import domain.User;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.RideAlreadyExistException;
@@ -112,6 +115,24 @@ public class BLFacadeImplementation implements BLFacade {
 	 */
     public void bookRide(String email, Ride ride, int seats) {
     	dbManager.bookRide(email, ride, seats);
+    }
+    
+    /**
+	 * {@inheritDoc}
+	 */
+    public List<Ride> getRidesFromDriver(Driver driver){
+    	return dbManager.getRidesFromDriver(driver);
+    }
+    
+    /**
+	 * {@inheritDoc}
+	 */
+    public List<Booking> getBookingsFromTraveler(Traveler traveler){
+    	return dbManager.getBookingsFromTraveler(traveler);
+    }
+    
+    public List<Ride> bidaiakLortu(String departCity) {
+    	return dbManager.bidaiakLortu(departCity);
     }
 
 }

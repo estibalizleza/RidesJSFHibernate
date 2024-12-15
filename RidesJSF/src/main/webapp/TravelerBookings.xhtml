@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+	<h:head>
+		<title>Main</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+
+	<h:body>
+		<h:form>
+			<table>
+				<tr>
+					<td><h3>Nire erreserbak</h3></td>
+				</tr>
+				<tr>
+					<td><p:dataTable id="bookingTable" var="booking"
+							value="#{BookingTable.bookings}" style="margin-top:20px">
+							<p:column headerText="Driver email">
+								<h:outputText value="#{booking.ride.driver.email}" />
+							</p:column>
+							<p:column headerText="From">
+								<h:outputText value="#{booking.ride.fromCity}" />
+							</p:column>
+							<p:column headerText="To">
+								<h:outputText value="#{booking.ride.toCity}" />
+							</p:column>
+							<p:column headerText="Seats">
+								<h:outputText value="#{booking.seats}" />
+							</p:column>
+							<p:column headerText="Date">
+								<h:outputText value="#{booking.ride.date}" />
+							</p:column>
+						</p:dataTable> <h:messages for="bookingTable" style="color:red" />
+					</td>
+				</tr>
+			</table>
+			<p:commandButton value="Itxi" immediate="true"
+				styleClass="custom-button" action="#{BookingTable.close}" />
+			<h:messages id="mezuak" globalOnly="true" style="color:blue" />
+		</h:form>
+	</h:body>
+</f:view>
+
+</html>

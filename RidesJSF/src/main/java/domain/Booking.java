@@ -27,6 +27,9 @@ public class Booking implements Serializable {
 		this.traveler = traveler;
 		this.seats = seats;
 	}
+	public Booking() {
+		
+	}
 
 	public int getBookNumber() {
 		return bookNumber;

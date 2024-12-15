@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+	<h:head>
+		<title>Klaseko Ataza</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<body>
+		<h:form>
+			<h3>HIRI BAT ERRESERBATU</h3>
+			<table>
+				<tr>
+					<td>Aukeratu hiri bat:</td>
+					<td><p:selectOneMenu id="city"
+							value="#{KlasekoAtaza.selectedCity}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{KlasekoAtaza.cities}" var="city"
+								itemValue="#{city}" itemLabel="#{city}" />
+						</p:selectOneMenu><h:message for="city" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td><p:commandButton value="BIDAI GUZTIAK ERAKUTSI"
+							styleClass="custom-button" action="#{KlasekoAtaza.aukeratu}"/></td>
+				</tr>
+
+			</table>
+			<h:messages id="mezuak" globalOnly="true" style="color:blue" />
+		</h:form>
+	</body>
+</f:view>
+
+</html>

@@ -30,9 +30,25 @@
 				</tr>
 				<tr>
 					<td>
+						<p:commandButton value="View Rides"
+							styleClass="custom-button"
+							action="#{Main.goToViewRides}" 
+							rendered="#{Main.isDriver()}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
 						<p:commandButton value="BookRide"
 							styleClass="custom-button"
 							action="#{Main.goToBookRide}" 
+							rendered="#{Main.isTraveler()}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton value="View Bookings"
+							styleClass="custom-button"
+							action="#{Main.goToViewBookings}" 
 							rendered="#{Main.isTraveler()}" />
 					</td>
 				</tr>
@@ -67,6 +83,13 @@
 							styleClass="custom-button"
 							action="#{Main.logout}" 
 							rendered="#{Main.isUser()}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p:commandButton value="HIRI BATETIK ATERATZEN DIREN BIDAI GUZTIAK ERAKUTSI"
+							styleClass="custom-button"
+							action="#{Main.goToKlasekoAtaza}" />
 					</td>
 				</tr>
 			</table>

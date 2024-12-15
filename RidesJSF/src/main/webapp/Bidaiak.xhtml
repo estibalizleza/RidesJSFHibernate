@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+	<h:head>
+		<title>Bidaiak Erakutsi</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<body>
+		<h:form>
+			<h3>BIDAIAK</h3>
+			<table>
+				<tr>
+					<td><p:dataTable id="bidaiTaula" var="ride"
+							value="#{KlasekoAtaza.bidaiak}" style="margin-top:20px">
+							<p:column headerText="DEPART CITY">
+								<h:outputText value="#{ride.fromCity}" />
+							</p:column>
+							<p:column headerText="DRIVER EMAIL">
+								<h:outputText value="#{ride.driver.email}" />
+							</p:column>
+							<p:column headerText="RIDE DATE">
+								<h:outputText value="#{ride.date}" />
+							</p:column>
+							<p:column headerText="PRICE">
+								<h:outputText value="#{ride.price}" />
+							</p:column>
+						</p:dataTable> <h:messages for="bidaiTaula" style="color:red" />
+					</td>
+				</tr>
+
+			</table>
+			<h:messages id="mezuak" globalOnly="true" style="color:blue" />
+		</h:form>
+	</body>
+</f:view>
+
+</html>

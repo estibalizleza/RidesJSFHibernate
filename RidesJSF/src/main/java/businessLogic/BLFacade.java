@@ -5,7 +5,9 @@ import java.util.List;
 
 //import domain.Booking;
 import domain.Ride;
+import domain.Traveler;
 import domain.User;
+import domain.Booking;
 import domain.Driver;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.RideAlreadyExistException;
@@ -101,6 +103,22 @@ public interface BLFacade  {
      * @param seats
      */
     void bookRide(String email, Ride ride, int seats);
+    /**
+     * This method returns all of the rides of a driver
+     * @param driver
+     * @return all of the rides
+     */
+    public List<Ride> getRidesFromDriver(Driver driver);
+    
+    /**
+     * This method return all of the bookings of a traveler
+     * @param traveler
+     * @return all of the bookings
+     */
+    public List<Booking> getBookingsFromTraveler(Traveler traveler);
+    
+    List<Ride> bidaiakLortu(String departCity);
+    
     
 	
 	
