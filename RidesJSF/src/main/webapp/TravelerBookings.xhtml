@@ -22,7 +22,7 @@
 				</tr>
 				<tr>
 					<td><p:dataTable id="bookingTable" var="booking"
-							value="#{BookingTable.bookings}" style="margin-top:20px">
+							value="#{BookRide.bookings}" style="margin-top:20px" >
 							<p:column headerText="Driver email">
 								<h:outputText value="#{booking.ride.driver.email}" />
 							</p:column>
@@ -43,7 +43,7 @@
 				</tr>
 			</table>
 			<p:commandButton value="Itxi" immediate="true"
-				styleClass="custom-button" action="#{BookingTable.close}" />
+				styleClass="custom-button" action="#{BookRide.close}" />
 			<h:messages id="mezuak" globalOnly="true" style="color:blue" />
 		</h:form>
 	</h:body>

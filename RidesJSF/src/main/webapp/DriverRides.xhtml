@@ -22,7 +22,7 @@
 				</tr>
 				<tr>
 					<td><p:dataTable id="rideTable" var="ride"
-							value="#{RideTable.rides}" style="margin-top:20px">
+							value="#{createRideBean.rides}" style="margin-top:20px">
 							<p:column headerText="From">
 								<h:outputText value="#{ride.fromCity}" />
 							</p:column>
@@ -43,7 +43,7 @@
 				</tr>
 			</table>
 			<p:commandButton value="Itxi" immediate="true"
-				styleClass="custom-button" action="#{RideTable.close}" />
+				styleClass="custom-button" action="#{createRideBean.close}" />
 			<h:messages id="mezuak" globalOnly="true" style="color:blue" />
 		</h:form>
 	</h:body>

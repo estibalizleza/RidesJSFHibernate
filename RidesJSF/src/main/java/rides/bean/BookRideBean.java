@@ -11,6 +11,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import businessLogic.BLFacade;
+import domain.Booking;
 import domain.Ride;
 import domain.Traveler;
 
@@ -24,6 +25,7 @@ public class BookRideBean {
 	private String selectedDepartCity;
 	private String selectedArrivalCity;
 	private Ride selectedRide;
+	private List<Booking> bookings;
 
 	public Ride getSelectedRide() {
 		return selectedRide;
@@ -40,6 +42,10 @@ public class BookRideBean {
 	public void setNumSeats(int numSeats) {
 		this.numSeats = numSeats;
 	}
+	
+	public void updateBookings() {
+	    bookings = businessLogic.getBookingsFromTraveler((Traveler) businessLogic.getCurrentUser());
+	}
 
 	public BookRideBean() {
 		businessLogic= FacadeBean.getBusinessLogic();
@@ -47,6 +53,7 @@ public class BookRideBean {
 		this.arrivalCities = new ArrayList<>();
 		departCities = businessLogic.getDepartCities();
 		filteredRides = new ArrayList<>();
+		bookings = businessLogic.getBookingsFromTraveler((Traveler)businessLogic.getCurrentUser());
 	}
 
 	public void bookRide() {
@@ -64,6 +71,8 @@ public class BookRideBean {
 							"Ez duzu diru nahikorik bidaia erreserbatzeko.", ""));
 				}else {
 					businessLogic.bookRide(t.getEmail(), selectedRide, numSeats);
+					//Booking taula eguneratu
+					this.updateBookings();
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Bidaia erreserbatu duzu!!!", ""));
 				}
@@ -72,6 +81,14 @@ public class BookRideBean {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Ezin da bidaia erreserbatu.", ""));
 		}
+	}
+
+	public List<Booking> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 	public List<Ride> getFilteredRides() {

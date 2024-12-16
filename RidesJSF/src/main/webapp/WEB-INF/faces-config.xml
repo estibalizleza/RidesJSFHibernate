@@ -39,16 +39,6 @@
 		<managed-bean-class>rides.bean.KlasekoAtazaBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	<managed-bean>
-		<managed-bean-name>RideTable</managed-bean-name>
-		<managed-bean-class>rides.bean.RideTableBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<managed-bean-name>BookingTable</managed-bean-name>
-		<managed-bean-class>rides.bean.BookingTableBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
 
 	<navigation-rule>
 

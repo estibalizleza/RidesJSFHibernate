@@ -2,14 +2,17 @@ package rides.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import domain.User;
 import org.primefaces.event.SelectEvent;
 
 import businessLogic.BLFacade;
 import domain.Driver;
+import domain.Ride;
 
 public class CreateRideBean implements Serializable {
 	private String departCity;
@@ -18,14 +21,31 @@ public class CreateRideBean implements Serializable {
 	private int numSeats;
 	private float price;
 	private BLFacade facadeBL;
+	private List<Ride> rides;
 	private static final long serialVersionUID = 1L;
 
 	public CreateRideBean() {
-		
 		this.facadeBL = FacadeBean.getBusinessLogic();
 		this.numSeats = 1;
+		User currentUser = facadeBL.getCurrentUser();
+
+	    // Check if the current user is a Driver
+	    if (currentUser instanceof Driver) 
+	        // Safe cast to Driver
+	        this.rides = facadeBL.getRidesFromDriver((Driver) currentUser);
 	}
 
+	public List<Ride> getRides() {
+		return rides;
+	}
+
+	public void setRides(List<Ride> rides) {
+		this.rides = rides;
+	}
+
+	public void updateRidesTable() {
+		rides = facadeBL.getRidesFromDriver((Driver) facadeBL.getCurrentUser());
+	}
 	public String getDepartCity() {
 		return departCity;
 	}
@@ -80,6 +100,7 @@ public class CreateRideBean implements Serializable {
 			facadeBL.createRide(departCity, arrivalCity, rideDate, numSeats, price, facadeBL.getCurrentUser().getEmail());
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Ride created successfully", null));
+			this.updateRidesTable();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));

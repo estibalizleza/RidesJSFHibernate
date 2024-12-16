@@ -281,20 +281,20 @@ public class HibernateDataAccess {
 		try {
 			session.beginTransaction();
 			if (mota.equals("Driver")) {
-				Driver existingDriver = (Driver) session.get(Driver.class, email);
-				if (existingDriver == null) {
-					Driver d = new Driver(email, password);
-					session.persist(d);
-				} else
-					return false;
-			} else if (mota.equals("Traveler")) {
-				Traveler existingTraveler = (Traveler) session.get(Traveler.class, email);
-				if (existingTraveler == null) {
-					Traveler t = new Traveler(email, password);
-					session.persist(t);
-				} else
-					return false;
-			}
+	            User existingDriver = (User) session.get(User.class, email);  // Fetch User, not Driver/Traveler directly
+	            if (existingDriver == null || !(existingDriver instanceof Driver)) {
+	                Driver d = new Driver(email, password);
+	                session.persist(d);
+	            } else
+	                return false;
+	        } else if (mota.equals("Traveler")) {
+	            User existingTraveler = (User) session.get(User.class, email);  // Fetch User, not Driver/Traveler directly
+	            if (existingTraveler == null || !(existingTraveler instanceof Traveler)) {
+	                Traveler t = new Traveler(email, password);
+	                session.persist(t);
+	            } else
+	                return false;
+	        }
 			session.getTransaction().commit();
 			return true;
 		} catch (Exception e) {

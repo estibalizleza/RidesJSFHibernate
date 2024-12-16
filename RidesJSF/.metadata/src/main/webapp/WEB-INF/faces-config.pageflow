@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" name="goToLogin" id="pf17327914104700" configfile="/RidesJSF/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="Main.xhtml" x="528" y="276" id="pf17331577836640" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf17331577836641 pf17331577836642 pf17341983454170 pf17341983454171 pf17341983454172 pf17341985935573 pf173428163846511 pf173428163846512" path="/Main.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Main.xhtml" x="528" y="276" id="pf17331577836640" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf17331577836641 pf17331577836642 pf17341983454170 pf17341983454171 pf17341983454172 pf17341985935573 pf173428163846511 pf173428163846512" path="/Main.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="CreateRide.xhtml" x="744" y="84" id="pf17331577836643" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf17331577836641" path="/CreateRide.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="QueryRides.xhtml" x="744" y="468" id="pf17331577836654" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf17331577836642" path="/QueryRides.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="Login.xhtml" x="908" y="289" id="pf17336817090721" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf17341983454170" path="/Login.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="Register.xhtml" x="574" y="50" id="pf17337380567073" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf17341983454171" path="/Register.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="BookRide.xhtml" x="528" y="494" id="pf17339263893535" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf17341983454172" path="/BookRide.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="KlasekoAtaza.xhtml" x="217" y="289" id="pf17341985935574" outlinks="pf17341985935575" inlinks="pf17341985935573" path="/KlasekoAtaza.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="Bidaiak.xhtml" x="217" y="144" id="pf17341985935576" inlinks="pf17341985935575" path="/Bidaiak.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="TravelerBookings.xhtml" x="188" y="419" id="pf173428163846513" inlinks="pf173428163846511" path="/TravelerBookings.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="DriverRides.xhtml" x="288" y="494" id="pf173428163846514" inlinks="pf173428163846512" path="/DriverRides.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="KlasekoAtaza.xhtml" x="217" y="289" id="pf17341985935574" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf17341985935575" inlinks="pf17341985935573" path="/KlasekoAtaza.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Bidaiak.xhtml" x="217" y="144" id="pf17341985935576" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf17341985935575" path="/Bidaiak.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="TravelerBookings.xhtml" x="188" y="419" id="pf173428163846513" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf173428163846511" path="/TravelerBookings.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="DriverRides.xhtml" x="288" y="494" id="pf173428163846514" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf173428163846512" path="/DriverRides.xhtml"/>
   <links id="pf17331577836641" target="pf17331577836643" source="pf17331577836640" outcome="goToCreateRide"/>
   <links id="pf17331577836642" target="pf17331577836654" source="pf17331577836640" outcome="goToQueryRides"/>
   <links id="pf17341983454170" target="pf17336817090721" source="pf17331577836640" outcome="goToLogin"/>
